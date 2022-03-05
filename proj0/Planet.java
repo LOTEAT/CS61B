@@ -50,7 +50,7 @@ public class Planet {
         double dis = calcDistance(p);
         if(dis == 0)
             return 0;
-        double disX = Math.abs(p.xxPos - xxPos);
+        double disX = p.xxPos - xxPos;
         double force = calcForceExertedBy(p);
         return disX / dis * force;
     }
@@ -60,7 +60,7 @@ public class Planet {
         double dis = calcDistance(p);
         if(dis == 0)
             return 0;
-        double disY = Math.abs(p.yyPos - yyPos);
+        double disY = p.yyPos - yyPos;
         double force = calcForceExertedBy(p);
         return disY / dis * force;
     }
