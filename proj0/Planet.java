@@ -12,7 +12,7 @@ public class Planet {
     public double mass;
     // The name of the file that corresponds to the image that depicts the body
     public String imgFileName;
-    public double G = 6.67E-11;
+    private final double G = 6.67E-11;
     public Planet(double xP, double yP, double xV,
                   double yV, double m, String img){
         xxPos = xP;
