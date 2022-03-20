@@ -97,14 +97,27 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        DequeNode p = first;
-        for (int i = 0; i < index; ++i) {
+        if (index > size) {
+            return null;
+        }
+        DequeNode p = first.next;
+        for (int i = 1; i < index; ++i) {
             p = p.next;
         }
         return p.item;
     }
 
     public T getRecursive(int index){
-        return null;
+        if (index >= size) {
+            return null;
+        }
+        return getRecursiveHelper(index, first.next);
+    }
+
+    public T getRecursiveHelper(int index, DequeNode node){
+        if (index == 0){
+            return node.item;
+        }
+        return getRecursiveHelper(index-1, node.next);
     }
 }
