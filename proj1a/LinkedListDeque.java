@@ -56,6 +56,7 @@ public class LinkedListDeque<T> {
         sentB.pre = node;
         node.pre = second_last;
         node.next = sentB;
+        second_last.next = node;
     }
 
     // return true if deque is empty, false otherwise
