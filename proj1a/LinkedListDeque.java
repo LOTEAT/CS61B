@@ -103,4 +103,8 @@ public class LinkedListDeque<T> {
         }
         return p.item;
     }
+
+    public T getRecursive(int index){
+        return null;
+    }
 }
