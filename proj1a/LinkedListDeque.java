@@ -66,7 +66,7 @@ public class LinkedListDeque<T> {
     public void printDeque() {
         DequeNode p = first.next;
         while (p.next != null) {
-            System.out.println(p.item + " ");
+            System.out.print(p.item + " ");
             p = p.next;
         }
     }
