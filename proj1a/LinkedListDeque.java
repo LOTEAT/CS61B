@@ -109,6 +109,7 @@ public class LinkedListDeque<T> {
         DequeNode iterator = sentF.next;
         while(it_count != index){
             iterator = iterator.next;
+            it_count += 1;
         }
         return iterator.item;
     }
