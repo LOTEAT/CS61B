@@ -8,23 +8,24 @@ public class LinkedListDeque<T> {
     private DequeNode last;
     private int size;
 
-    public class DequeNode{
-        public DequeNode prev;
-        public T item;
-        public DequeNode next;
+    public class DequeNode {
+        private DequeNode prev;
+        private T item;
+        private DequeNode next;
 
-        public DequeNode(){
+        public DequeNode() {
             prev = null;
             next = null;
         }
-        public DequeNode(T x){
+
+        public DequeNode(T x) {
             item = x;
             prev = null;
             next = null;
         }
     }
 
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         size = 0;
         first = new DequeNode();
         last = new DequeNode();
@@ -33,8 +34,7 @@ public class LinkedListDeque<T> {
     }
 
 
-
-    public void addFirst(T item){
+    public void addFirst(T item) {
         size += 1;
         DequeNode cur = new DequeNode(item);
         DequeNode temp = first.next;
@@ -45,7 +45,7 @@ public class LinkedListDeque<T> {
 
     }
 
-    public void addLast(T item){
+    public void addLast(T item) {
         size += 1;
         DequeNode temp = last.prev;
         DequeNode cur = new DequeNode(item);
@@ -55,24 +55,26 @@ public class LinkedListDeque<T> {
         last.prev = cur;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return (size == 0);
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public void printDeque(){
+    public void printDeque() {
         DequeNode p = first.next;
-        while(p.next != null){
+        while (p.next != null) {
             System.out.println(p.item + " ");
             p = p.next;
         }
     }
 
-    public T removeFirst(){
-        if(first.next == last)return null;
+    public T removeFirst() {
+        if (first.next == last) {
+            return null;
+        }
         size -= 1;
         DequeNode rmv = first.next;
         DequeNode temp = rmv.next;
@@ -82,8 +84,10 @@ public class LinkedListDeque<T> {
     }
 
 
-    public T removeLast(){
-        if(last.prev == first)return null;
+    public T removeLast() {
+        if (last.prev == first) {
+            return null;
+        }
         size -= 1;
         DequeNode rmv = last.prev;
         DequeNode temp = rmv.prev;
@@ -92,9 +96,9 @@ public class LinkedListDeque<T> {
         return rmv.item;
     }
 
-    public T get(int index){
+    public T get(int index) {
         DequeNode p = first;
-        for(int i = 0;i < index;++i){
+        for (int i = 0; i < index; ++i) {
             p = p.next;
         }
         return p.item;
