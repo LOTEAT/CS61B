@@ -114,8 +114,15 @@ public class LinkedListDeque<T> {
         return iterator.item;
     }
 
+    private T getRecursiveHelper(int index, DequeNode first){
+        if(index == 0)
+            return first.item;
+        return getRecursiveHelper(index - 1, first.next);
+    }
     // recursive get
     public T getRecursive(int index){
-        return null;
+        if(index >= size)
+            return null;
+        return getRecursiveHelper(index, sentF.next);
     }
 }
