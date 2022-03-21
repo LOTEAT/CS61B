@@ -97,11 +97,11 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        if (index > size) {
+        if (index >= size) {
             return null;
         }
         DequeNode p = first.next;
-        for (int i = 1; i < index; ++i) {
+        for (int i = 0; i < index; ++i) {
             p = p.next;
         }
         return p.item;
