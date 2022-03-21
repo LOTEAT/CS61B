@@ -114,6 +114,7 @@ public class LinkedListDeque<T> {
         return iterator.item;
     }
 
+    // recursive
     private T getRecursiveHelper(int index, DequeNode first){
         if(index == 0)
             return first.item;
