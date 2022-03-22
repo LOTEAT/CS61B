@@ -80,9 +80,29 @@ public class ArrayDequeTest {
         printTestStatus(passed);
     }
 
+    public static void addResizeTest() {
+
+        System.out.println("Running add/resize test.");
+
+        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
+        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        // should be empty
+        boolean passed = checkEmpty(true, lld1.isEmpty());
+        for(int i = 0; i < 100; i++)
+            lld1.addFirst(i);
+        for(int i = 0; i < 100; i++)
+            lld1.addLast(i);
+        // should not be 10
+        passed = checkSize(200, lld1.size()) && passed;
+        lld1.printDeque();
+        System.out.println();
+        printTestStatus(passed);
+    }
+
     public static void main(String[] args) {
         System.out.println("Running tests.\n");
         addIsEmptySizeTest();
         addRemoveTest();
+        addResizeTest();
     }
 } 

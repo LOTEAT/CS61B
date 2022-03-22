@@ -33,11 +33,12 @@ public class ArrayDeque<T> {
         size = 0;
     }
 
-    public void resize(double refactor){
+    // resize capacity
+    private void resize(double refactor){
         capacity = (int) (capacity * refactor);
         T[] new_item = (T[]) new Object[capacity];
         System.arraycopy(item, start, new_item, 0, size - start);
-        System.arraycopy(item, 0, new_item, size - start, end - size);
+        System.arraycopy(item, 0, new_item, size - start, size - end);
         item = new_item;
         start = 0;
         end = size;
