@@ -17,7 +17,7 @@ public class ArrayDeque<T> {
     private int capacity;
 
     // core data structure
-    private T item[];
+    private T[] item;
 
     // start & end
     private int start;
@@ -39,8 +39,8 @@ public class ArrayDeque<T> {
         int capacityCopy = capacity;
         capacity = (int) (capacity * refactor);
         T[] newItem = (T[]) new Object[capacity];
-        boolean is_cross = end <= start;
-        if (is_cross) {
+        boolean isCross = end <= start;
+        if (isCross) {
             System.arraycopy(item, start, newItem, 0, capacityCopy - start);
             System.arraycopy(item, 0, newItem, capacityCopy - start, end);
         } else {
@@ -52,22 +52,22 @@ public class ArrayDeque<T> {
     }
 
     // add an item of type T to the front of the deque
-    public void addFirst(T item) {
+    public void addFirst(T value) {
         if (size == capacity) {
             resize(INCREASE);
         }
         size += 1;
         start = (start + capacity - 1) % capacity;
-        this.item[start] = item;
+        this.item[start] = value;
     }
 
     // add an item of type T to the back of the deque
-    public void addLast(T item) {
+    public void addLast(T value) {
         if (size == capacity) {
             resize(INCREASE);
         }
         size += 1;
-        this.item[end] = item;
+        this.item[end] = value;
         end = (end + 1) % capacity;
     }
 
@@ -85,11 +85,11 @@ public class ArrayDeque<T> {
     // separated by a space
     public void printDeque() {
         int iterator = start;
-        int num_count = 0;
-        while (num_count != size) {
+        int numCount = 0;
+        while (numCount != size) {
             System.out.print(item[iterator] + " ");
             iterator = (iterator + 1) % capacity;
-            num_count += 1;
+            numCount += 1;
         }
     }
 

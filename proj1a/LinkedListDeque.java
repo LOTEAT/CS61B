@@ -55,11 +55,11 @@ public class LinkedListDeque<T> {
         size += 1;
         DequeNode node = new DequeNode(item);
         // copy the second last node
-        DequeNode second_last = sentB.pre;
+        DequeNode secondLast = sentB.pre;
         sentB.pre = node;
-        node.pre = second_last;
+        node.pre = secondLast;
         node.next = sentB;
-        second_last.next = node;
+        secondLast.next = node;
     }
 
     // return true if deque is empty, false otherwise
@@ -116,11 +116,11 @@ public class LinkedListDeque<T> {
         if (index >= size) {
             return null;
         }
-        int it_count = 0;
+        int itCount = 0;
         DequeNode iterator = sentF.next;
-        while (it_count != index) {
+        while (itCount != index) {
             iterator = iterator.next;
-            it_count += 1;
+            itCount += 1;
         }
         return iterator.item;
     }
