@@ -53,8 +53,9 @@ public class ArrayDeque<T> {
 
     // add an item of type T to the front of the deque
     public void addFirst(T item) {
-        if (size == capacity)
+        if (size == capacity) {
             resize(INCREASE);
+        }
         size += 1;
         start = (start + capacity - 1) % capacity;
         this.item[start] = item;
@@ -62,8 +63,9 @@ public class ArrayDeque<T> {
 
     // add an item of type T to the back of the deque
     public void addLast(T item) {
-        if (size == capacity)
+        if (size == capacity) {
             resize(INCREASE);
+        }
         size += 1;
         this.item[end] = item;
         end = (end + 1) % capacity;
@@ -92,33 +94,38 @@ public class ArrayDeque<T> {
 
     // remove and return the item at the front of the deque. If no such item exists, returns null
     public T removeFirst() {
-        if (isEmpty())
+        if (isEmpty()) {
             return null;
+        }
         size -= 1;
         T first = item[start];
         start = (start + 1) % capacity;
-        if ((double) size / capacity < 0.25 && capacity >= 16)
+        if ((double) size / capacity < 0.25 && capacity >= 16) {
             resize(DECREASE);
+        }
         return first;
     }
 
     // remove and return the item at the back of the deque. If no such item exists, returns null
     public T removeLast() {
-        if (isEmpty())
+        if (isEmpty()) {
             return null;
+        }
         size -= 1;
         end = (end - 1 + capacity) % capacity;
         T last = item[end];
-        if ((double) size / capacity < 0.25 && capacity >= 16)
+        if ((double) size / capacity < 0.25 && capacity >= 16) {
             resize(DECREASE);
+        }
         return last;
     }
 
     // get the item at the given index, where 0 is the front, 1 is the next item, and so forth.
     // If no such item exists, returns null. must not alter the deque!
     public T get(int index) {
-        if (index >= size)
+        if (index >= size) {
             return null;
+        }
         return item[(index + start) % capacity];
     }
 

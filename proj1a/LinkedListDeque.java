@@ -72,7 +72,8 @@ public class LinkedListDeque<T> {
         return size;
     }
 
-    // print the items in the deque from first to last, separated by a space
+    // print the items in the deque from first to last,
+    // separated by a space
     public void printDeque() {
         DequeNode iterator = sentF.next;
         while (iterator.next != null) {
@@ -81,10 +82,12 @@ public class LinkedListDeque<T> {
         }
     }
 
-    // remove and return the item at the front of the deque. If no such item exists, returns null
+    // remove and return the item at the front of the deque.
+    // If no such item exists, returns null
     public T removeFirst() {
-        if (isEmpty())
+        if (isEmpty()) {
             return null;
+        }
         DequeNode first = sentF.next;
         sentF.next = first.next;
         first.next.pre = sentF;
@@ -92,10 +95,12 @@ public class LinkedListDeque<T> {
         return first.item;
     }
 
-    // remove and return the item at the back of the deque. If no such item exists, returns null
+    // remove and return the item at the back of the deque.
+    // If no such item exists, returns null
     public T removeLast() {
-        if (isEmpty())
+        if (isEmpty()) {
             return null;
+        }
         DequeNode last = sentB.pre;
         sentB.pre = last.pre;
         last.pre.next = sentB;
@@ -103,11 +108,14 @@ public class LinkedListDeque<T> {
         return last.item;
     }
 
-    // get the item at the given index, where 0 is the front, 1 is the next item, and so forth.
-    // If no such item exists, returns null. must not alter the deque!
+    // get the item at the given index, where 0 is the front,
+    // 1 is the next item, and so forth.
+    // If no such item exists, returns null.
+    // must not alter the deque!
     public T get(int index) {
-        if (index >= size)
+        if (index >= size) {
             return null;
+        }
         int it_count = 0;
         DequeNode iterator = sentF.next;
         while (it_count != index) {
@@ -119,15 +127,17 @@ public class LinkedListDeque<T> {
 
     // recursive
     private T getRecursiveHelper(int index, DequeNode first) {
-        if (index == 0)
+        if (index == 0) {
             return first.item;
+        }
         return getRecursiveHelper(index - 1, first.next);
     }
 
     // recursive get
     public T getRecursive(int index) {
-        if (index >= size)
+        if (index >= size) {
             return null;
+        }
         return getRecursiveHelper(index, sentF.next);
     }
 }
