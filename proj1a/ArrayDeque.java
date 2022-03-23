@@ -9,45 +9,53 @@ public class ArrayDeque<T> {
     private int capacity;
     private int start;
     private int end;
-    private double ratio = (double) size / items.length;
+
+    private static final double INCREASE = 2;
+    private static final double DECREASE = 0.5;
 
 
     public ArrayDeque() {
         size = 0;
         items = (T []) new Object[8];
         capacity = 8;
-        start = -1;
+        start = 0;
         end = 0;
         size = 0;
     }
 
-    public void addFirst(T item) {
-        start = (start + capacity) % capacity;
-        items[start] =item;
-        if ( ratio <= 0.25 && capacity > 16) {
-            resize(size * 4);
+    private void resize(double refactor) {
+        int capacityCopy = capacity;
+        capacity = (int)(capacity*refactor);
+        T[] a = (T []) new Object[capacity];
+        boolean isCross = (end <= start);
+        if (isCross) {
+            System.arraycopy(items,start,a,0,capacityCopy-start);
+            System.arraycopy(items,0,a,capacityCopy-start,end);
+        }else {
+            System.arraycopy(items,start,a,0,end-start);
         }
+        items = a;
+        start=0;
+        end=size;
     }
 
-    private void resize(int new_size) {
-        T[] a = (T []) new Object[new_size];
-        for (int i=0; i<size;++i){
-            a[(i+capacity)%capacity]=items[(start+i)%capacity];
+    public void addFirst(T item) {
+        if(size == capacity) {
+            resize(INCREASE);
         }
-        capacity = new_size;
-        items = a;
+        size = size+1;
+        start = (start + capacity-1) % capacity;
+        items[start] =item;
     }
+
 
     public void addLast(T item) {
-        if (size == items.length) {
-            resize(size * 2);
+        if (size == capacity) {
+            resize(INCREASE);
         }
         items[end] = item;
         end = (end + 1) % capacity;
         size = size+1;
-        if ( ratio <= 0.25 && capacity > 16) {
-            resize(size * 4);
-        }
     }
 
     public boolean isEmpty() {
@@ -60,9 +68,11 @@ public class ArrayDeque<T> {
 
     public void printDeque() {
         int iterator = start;
-        while (iterator != end) {
+        int count = 0;
+        while (count != size) {
             System.out.print(items[iterator] + " ");
-            iterator = (iterator + 1) % capacity;
+            iterator = (iterator+1)%capacity;
+            count = count+1;
         }
     }
 
@@ -73,8 +83,8 @@ public class ArrayDeque<T> {
         size = size -1;
         T num = items[start];
         start = (start + 1) % capacity;
-        if ( ratio <= 0.25 && capacity > 16) {
-            resize(size * 4);
+        if ( (double) size / capacity < 0.25 && capacity >= 16) {
+            resize(DECREASE);
         }
         return num;
     }
@@ -84,10 +94,10 @@ public class ArrayDeque<T> {
             return null;
         }
         size = size -1;
-        T num = items[end];
         end = (end - 1 + capacity) % capacity;
-        if ( ratio <= 0.25 && capacity > 16) {
-            resize(size * 4);
+        T num = items[end];
+        if ( (double) size / capacity < 0.25 && capacity > 16) {
+            resize(DECREASE);
         }
         return num;
     }
