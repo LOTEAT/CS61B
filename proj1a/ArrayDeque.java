@@ -81,7 +81,8 @@ public class ArrayDeque<T> {
         return size;
     }
 
-    // print the items in the deque from first to last, separated by a space
+    // print the items in the deque from first to last,
+    // separated by a space
     public void printDeque() {
         int iterator = start;
         int num_count = 0;
@@ -92,7 +93,8 @@ public class ArrayDeque<T> {
         }
     }
 
-    // remove and return the item at the front of the deque. If no such item exists, returns null
+    // remove and return the item at the front of the deque.
+    // If no such item exists, returns null
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -106,7 +108,8 @@ public class ArrayDeque<T> {
         return first;
     }
 
-    // remove and return the item at the back of the deque. If no such item exists, returns null
+    // remove and return the item at the back of the deque.
+    // If no such item exists, returns null
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -120,8 +123,10 @@ public class ArrayDeque<T> {
         return last;
     }
 
-    // get the item at the given index, where 0 is the front, 1 is the next item, and so forth.
-    // If no such item exists, returns null. must not alter the deque!
+    // get the item at the given index, where 0 is the front,
+    // 1 is the next item, and so forth.
+    // If no such item exists, returns null.
+    // must not alter the deque!
     public T get(int index) {
         if (index >= size) {
             return null;
