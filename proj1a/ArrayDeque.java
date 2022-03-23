@@ -35,10 +35,17 @@ public class ArrayDeque<T> {
 
     // resize capacity
     private void resize(double refactor){
+        int capacity_copy = capacity;
         capacity = (int) (capacity * refactor);
         T[] new_item = (T[]) new Object[capacity];
-        System.arraycopy(item, start, new_item, 0, size - start);
-        System.arraycopy(item, 0, new_item, size - start, size - end);
+        boolean is_cross = end <= start;
+        if(is_cross){
+            System.arraycopy(item, start, new_item, 0, capacity_copy - start);
+            System.arraycopy(item, 0, new_item, capacity_copy - start, end);
+        }
+        else{
+            System.arraycopy(item, start, new_item, 0, end - start);
+        }
         item = new_item;
         start = 0;
         end = size;
