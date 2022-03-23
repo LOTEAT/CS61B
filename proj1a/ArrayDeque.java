@@ -75,9 +75,11 @@ public class ArrayDeque<T> {
     // print the items in the deque from first to last, separated by a space
     public void printDeque(){
         int iterator = start;
-        while(iterator != end){
+        int num_count = 0;
+        while(num_count != size){
             System.out.print(item[iterator] + " ");
             iterator = (iterator + 1) % capacity;
+            num_count += 1;
         }
     }
 
