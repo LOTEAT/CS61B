@@ -87,8 +87,6 @@ public class ArrayDequeTest {
     public static void addAndRemoveResizeTest() {
 
         System.out.println("Running add/remove/resize test.");
-
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
         // should be empty
         boolean passed = checkEmpty(true, lld1.isEmpty());
