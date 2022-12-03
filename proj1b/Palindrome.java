@@ -18,4 +18,17 @@ public class Palindrome {
         return true;
     }
 
+
+
+    public boolean isPalindrome(String word, CharacterComparator cc){
+        int start = 0, end = word.length() - 1;
+        while(start < end){
+            if(!cc.equalChars(word.charAt(start), word.charAt(end)))
+                return false;
+            start++;
+            end--;
+        }
+        return true;
+    }
+
 }
