@@ -177,15 +177,19 @@ public class IntList {
         return true;
     }
 
-    public static IntList reverse(IntList list){
-        if(list == null)
+    public static IntList reverse(IntList L) {
+        if (L == null) {
             return null;
-        IntList reverse_list = null;
-        while(list != null){
-            reverse_list = new IntList(list.first, reverse_list);
-            list = list.rest;
         }
-        return reverse_list;
+        IntList first = L,  rest = L.rest;
+        first.rest = null;
+        while (rest != null) {
+            IntList temp = rest.rest;
+            rest.rest = first;
+            first = rest;
+            rest = temp;
+        }
+        return first;
     }
 
 
