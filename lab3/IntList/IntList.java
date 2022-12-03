@@ -177,7 +177,7 @@ public class IntList {
         return true;
     }
 
-    public IntList reverse(IntList list){
+    public static IntList reverse(IntList list){
         if(list == null)
             return null;
         IntList reverse_list = null;

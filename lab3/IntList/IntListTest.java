@@ -72,8 +72,8 @@ public class IntListTest {
         IntList B = IntList.of();
         IntList A_exp = IntList.of(6, 5, 4, 3, 2, 1);
         IntList B_exp = IntList.of();
-        assertEquals(A_exp, A.reverse(A));
-        assertEquals(B_exp, B.reverse(B));
+        assertEquals(A_exp, IntList.reverse(A));
+        assertEquals(B_exp, IntList.reverse(B));
     }
 
     /** If you're running this from the command line, you'll need
