@@ -19,13 +19,21 @@ public class TestPalindrome {
 
     @Test
     public void testIsPalindrome() {
-        assertEquals(false, palindrome.isPalindrome("persiflage"));
-        assertEquals(true, palindrome.isPalindrome("aabbbbaa"));
+        assertTrue(palindrome.isPalindrome(""));
+        assertTrue(palindrome.isPalindrome("a"));
+        assertTrue(palindrome.isPalindrome("noon"));
+        assertFalse(palindrome.isPalindrome("horse"));
+        assertFalse(palindrome.isPalindrome("aaab"));
+        assertFalse(palindrome.isPalindrome("abA"));
     }
 
     @Test
     public void testIsPalindrome2() {
-        assertEquals(false, palindrome.isPalindrome("aaaa", offByOne));
-        assertEquals(true, palindrome.isPalindrome("aabb", offByOne));
+        CharacterComparator cc = new OffByOne();
+        assertTrue(palindrome.isPalindrome("", cc));
+        assertTrue(palindrome.isPalindrome("a", cc));
+        assertTrue(palindrome.isPalindrome("flake", cc));
+        assertFalse(palindrome.isPalindrome("aabaa", cc));
+        assertFalse(palindrome.isPalindrome("noon", cc));
     }
 }
