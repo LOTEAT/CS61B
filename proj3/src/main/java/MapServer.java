@@ -1,24 +1,27 @@
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import static spark.Spark.before;
+import static spark.Spark.get;
+import static spark.Spark.halt;
+import static spark.Spark.staticFileLocation;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.IOException;
 
+import javax.imageio.ImageIO;
 
 /* Maven is used to pull in these dependencies. */
 import com.google.gson.Gson;
-
-import static spark.Spark.*;
 
 /**
  * This MapServer class is the entry point for running the JavaSpark web server for the BearMaps
@@ -59,16 +62,16 @@ public class MapServer {
      * lrlat : lower right corner latitude,<br> lrlon : lower right corner longitude <br>
      * w : user viewport window width in pixels,<br> h : user viewport height in pixels.
      **/
-    private static final String[] REQUIRED_RASTER_REQUEST_PARAMS = {"ullat", "ullon", "lrlat",
-        "lrlon", "w", "h"};
+    private static final String[] REQUIRED_RASTER_REQUEST_PARAMS =
+        {"ullat", "ullon", "lrlat", "lrlon", "w", "h"};
     /**
      * Each route request to the server will have the following parameters
      * as keys in the params map.<br>
      * start_lat : start point latitude,<br> start_lon : start point longitude,<br>
      * end_lat : end point latitude, <br>end_lon : end point longitude.
      **/
-    private static final String[] REQUIRED_ROUTE_REQUEST_PARAMS = {"start_lat", "start_lon",
-        "end_lat", "end_lon"};
+    private static final String[] REQUIRED_ROUTE_REQUEST_PARAMS =
+        {"start_lat", "start_lon", "end_lat", "end_lon"};
 
     /**
      * The result of rastering must be a map containing all of the
@@ -81,7 +84,6 @@ public class MapServer {
     private static GraphDB graph;
     private static List<Long> route = new LinkedList<>();
     /* Define any static variables here. Do not define any instance variables of MapServer. */
-
 
     /**
      * Place any initialization statements that will be run before the server main loop here.
@@ -107,8 +109,7 @@ public class MapServer {
         /* Define the raster endpoint for HTTP GET requests. I use anonymous functions to define
          * the request handlers. */
         get("/raster", (req, res) -> {
-            HashMap<String, Double> params =
-                    getRequestParams(req, REQUIRED_RASTER_REQUEST_PARAMS);
+            HashMap<String, Double> params = getRequestParams(req, REQUIRED_RASTER_REQUEST_PARAMS);
             /* The png image is written to the ByteArrayOutputStream */
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             /* getMapRaster() does almost all the work for this API call */
@@ -129,8 +130,7 @@ public class MapServer {
 
         /* Define the routing endpoint for HTTP GET requests. */
         get("/route", (req, res) -> {
-            HashMap<String, Double> params =
-                    getRequestParams(req, REQUIRED_ROUTE_REQUEST_PARAMS);
+            HashMap<String, Double> params = getRequestParams(req, REQUIRED_ROUTE_REQUEST_PARAMS);
             route = Router.shortestPath(graph, params.get("start_lon"), params.get("start_lat"),
                     params.get("end_lon"), params.get("end_lat"));
             String directions = getDirectionsText();
@@ -178,8 +178,8 @@ public class MapServer {
      * @param requiredParams TestParams to validate.
      * @return A populated map of input parameter to it's numerical value.
      */
-    private static HashMap<String, Double> getRequestParams(
-            spark.Request req, String[] requiredParams) {
+    private static HashMap<String, Double> getRequestParams(spark.Request req,
+            String[] requiredParams) {
         Set<String> reqParams = req.queryParams();
         HashMap<String, Double> params = new HashMap<>();
         for (String param : requiredParams) {
@@ -203,7 +203,7 @@ public class MapServer {
      * we have made this into provided code since it was just a bit too low level.
      */
     private static void writeImagesToOutputStream(Map<String, Object> rasteredImageParams,
-                                                  ByteArrayOutputStream os) {
+            ByteArrayOutputStream os) {
         String[][] renderGrid = (String[][]) rasteredImageParams.get("render_grid");
         int numVertTiles = renderGrid.length;
         int numHorizTiles = renderGrid[0].length;
@@ -235,13 +235,13 @@ public class MapServer {
         if (route != null && !route.isEmpty()) {
             Graphics2D g2d = (Graphics2D) graphic;
             g2d.setColor(MapServer.ROUTE_STROKE_COLOR);
-            g2d.setStroke(new BasicStroke(MapServer.ROUTE_STROKE_WIDTH_PX,
-                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g2d.setStroke(new BasicStroke(MapServer.ROUTE_STROKE_WIDTH_PX, BasicStroke.CAP_ROUND,
+                    BasicStroke.JOIN_ROUND));
             route.stream().reduce((v, w) -> {
                 g2d.drawLine((int) ((graph.lon(v) - ullon) * (1 / wdpp)),
-                             (int) ((ullat - graph.lat(v)) * (1 / hdpp)),
-                             (int) ((graph.lon(w) - ullon) * (1 / wdpp)),
-                             (int) ((ullat - graph.lat(w)) * (1 / hdpp)));
+                        (int) ((ullat - graph.lat(v)) * (1 / hdpp)),
+                        (int) ((graph.lon(w) - ullon) * (1 / wdpp)),
+                        (int) ((ullat - graph.lat(w)) * (1 / hdpp)));
                 return w;
             });
         }
@@ -285,7 +285,7 @@ public class MapServer {
      * cleaned <code>prefix</code>.
      */
     public static List<String> getLocationsByPrefix(String prefix) {
-        return new LinkedList<>();
+        return graph.getLocationsByPrefix(prefix);
     }
 
     /**
@@ -301,7 +301,7 @@ public class MapServer {
      * "id" : Number, The id of the node. <br>
      */
     public static List<Map<String, Object>> getLocations(String locationName) {
-        return new LinkedList<>();
+        return graph.getLocations(locationName);
     }
 
     /**
@@ -332,11 +332,11 @@ public class MapServer {
     private static String getDirectionsText() {
         List<Router.NavigationDirection> directions = Router.routeDirections(graph, route);
         if (directions == null || directions.isEmpty()) {
-          return "";
+            return "";
         }
         StringBuilder sb = new StringBuilder();
         int step = 1;
-        for (Router.NavigationDirection d: directions) {
+        for (Router.NavigationDirection d : directions) {
             sb.append(String.format("%d. %s <br>", step, d));
             step += 1;
         }
